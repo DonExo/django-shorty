@@ -14,7 +14,7 @@ def index(request):
             form_obj = form.save(commit=False)
 
             shortener, created = Shortener.objects.get_or_create(original_url=form_obj.original_url)
-            # Place for assigning User logic to the shortener
+            # Place for assigning User logic to the shorteners
 
             # Copy the text to the user's clipboard
             df = pd.DataFrame(["{}{}".format(host, shortener.short_url)])
