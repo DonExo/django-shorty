@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-# import pyperclip
+import pandas as pd
 
 from .models import Shortener
 from .forms import FormShortener
@@ -10,18 +10,22 @@ def index(request):
         form = FormShortener(request.POST)
         host = request.get_raw_uri()
         if form.is_valid():
+            # We don't actually care about the form at this moment, but just the URL value
             form_obj = form.save(commit=False)
+
             shortener, created = Shortener.objects.get_or_create(original_url=form_obj.original_url)
             # Place for assigning User logic to the shortener
 
-            # pyperclip.copy("{}{}".format(host, shortener.short_url))
-            # message = "Short url copied to user Clipboard"
+            # Copy the text to the user's clipboard
+            df = pd.DataFrame(["{}{}".format(host, shortener.short_url)])
+            df.to_clipboard(index=False, header=False)
+            message = "Short url copied to user Clipboard"
             return render(request,
                           "backend/index.html",
                           {'form': form,
                           'result': shortener.short_url,
                           'host': host,
-                          # 'message': message,
+                          'message': message,
                           'created': created})
 
     form = FormShortener()
