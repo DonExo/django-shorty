@@ -22,7 +22,7 @@
 
     <div id="container">
         <div id="main">
-            <h2>URL Shortener</h2>
+            <h2><a href="/">URL Shortener</a></h2>
             <br/><br/><br/><br/>
 
             <form method="post" action=".">
@@ -32,8 +32,8 @@
                 <input type="submit" value="Submit">
             </form>
             {% if result %}
-                <p>Your {% if created %}new {% endif %}shortened url is:</p>
-                <a href="{{ host }}{{ result }}" target="_blank">{{ host }}{{ result }}</a>
+                <p>{{ message }}</p>
+                <a href="{{ result.short_url }}" target="_blank">{{ host }}{{ result.short_url }}</a> (Clicked {{ result.times_visited }} time{{ result.times_visited|pluralize }})
             {% endif  %}
         </div>
     </div>

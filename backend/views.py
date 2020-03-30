@@ -13,13 +13,18 @@ def index(request):
             form_obj = form.save(commit=False)
 
             shortener, created = Shortener.objects.get_or_create(original_url=form_obj.original_url)
-            # Place for assigning User logic to the shorteners
+            if created:
+                message = "A new 'shortcut' has been generated!"
+            else:
+                message = "An existing 'shortcut' has been found for your URL."
+
+            form = FormShortener()
             return render(request,
                           "backend/index.html",
                           {'form': form,
-                          'result': shortener.short_url,
+                          'result': shortener,
                           'host': host,
-                          'created': created})
+                          'message': message})
 
     form = FormShortener()
     return render(request, "backend/index.html", {'form': form})
