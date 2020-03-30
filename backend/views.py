@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-import pyperclip
+# import pyperclip
 
 from .models import Shortener
 from .forms import FormShortener
@@ -12,16 +12,16 @@ def index(request):
         if form.is_valid():
             form_obj = form.save(commit=False)
             shortener, created = Shortener.objects.get_or_create(original_url=form_obj.original_url)
-
             # Place for assigning User logic to the shortener
-            pyperclip.copy("{}{}".format(host, shortener.short_url))
-            message = "Short url copied to user Clipboard"
+
+            # pyperclip.copy("{}{}".format(host, shortener.short_url))
+            # message = "Short url copied to user Clipboard"
             return render(request,
                           "backend/index.html",
                           {'form': form,
                           'result': shortener.short_url,
                           'host': host,
-                          'message': message,
+                          # 'message': message,
                           'created': created})
 
     form = FormShortener()
