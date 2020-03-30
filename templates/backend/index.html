@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
+
+    <style>
+        #container{
+            width: 600px;
+            height: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        #main{
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="main">
+            <h2>URL Shortener</h2>
+            <br/><br/><br/><br/>
+
+            <form method="post" action=".">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <h6>Make sure to add 'http(s)' before the domain name</h6>
+                <input type="submit" value="Submit">
+            </form>
+            {% if result %}
+                <p>Your {% if created %}new {% endif %}shortened url is:</p>
+                <a href="{{ host }}{{ result }}" target="_blank">{{ host }}{{ result }}</a>
+                <p><i>{{ message }}</i></p>
+            {% endif  %}
+        </div>
+    </div>
+
+</body>
+</html>
