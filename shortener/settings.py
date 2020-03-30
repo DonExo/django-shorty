@@ -53,24 +53,27 @@ WSGI_APPLICATION = 'shortener.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'shortener.db'),
+#     }
+# }
+
+postgre_engine = 'django.db.backends.postgresql_psycopg2'
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'shortener.db'),
+        'ENGINE': postgre_engine,
+        'NAME': 'shortener',
+        'USER': 'developer',
+        'PASSWORD': 'developer',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
-# postgre_engine = 'django.db.backends.postgresql_psycopg2'
-# DATABASES = {
-#     'default': {
-#         'ENGINE': postgre_engine,
-#         'NAME': 'bloggyBlog',
-#         'USER': 'developer',
-#         'PASSWORD': 'developer',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
+import dj_database_url
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 
 # Password validation
